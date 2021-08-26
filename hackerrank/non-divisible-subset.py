@@ -1,5 +1,3 @@
-import time
-
 length, k = list(map(int, input().split()))
 arr = set(map(int, input().split()))
 
@@ -17,3 +15,5 @@ for element in arr:
         if checkSet(currentSet, element):
             currentSet.add(element)
 print(max([len(element) for element in setList]))
+
+# tle

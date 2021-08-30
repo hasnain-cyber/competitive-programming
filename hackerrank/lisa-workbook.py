@@ -3,9 +3,14 @@ arr = list(map(int, input().split()))
 
 page = 1
 counter = 0
+for nProblems in arr:
+    lowerBound, upperBound = 1, min(nProblems, k)
+    while lowerBound <= nProblems:
+        if lowerBound <= page <= min(nProblems, upperBound):
+            counter += 1
+        page += 1
+        lowerBound += k
+        upperBound += k
+print(counter)
 
-for i in range(len(arr)):
-    counter += 1 if arr[i] <= page else 0
-    page += 1
-
-# incomplete
+# correct

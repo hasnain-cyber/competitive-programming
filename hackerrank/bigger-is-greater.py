@@ -1,27 +1,27 @@
-def compare(char1, char2):  # return true if char1 > char2
-    if ord(char1) > ord(char2):
-        return True
-    return False
-
-
 for _ in range(int(input())):
     string = input()
     length = len(string)
-    flag = False
-    for i in range(length - 1, -1, -1):
-        if flag:
+
+    index1 = None
+    for i in range(length - 2, -1, -1):
+        if string[i] < string[i + 1]:
+            index1 = i
             break
-        for j in range(i - 1, -1, -1):
-            if compare(string[i], string[j]):
-                flag = True
 
-                # first switch the characters, than sort them
-                string = string[0: j] + string[i] + string[j + 1: i] + string[j] + string[i + 1:]
-                string = string[0: j + 1] + ''.join(sorted(string[j + 1:]))
-                break
-    if flag:
-        print(string)
-    else:
+    if index1 is None:
         print('no answer')
+    else:
+        index2 = None
+        for i in range(length - 1, -1, -1):
+            if string[i] > string[index1]:
+                index2 = i
+                break
+        answerList = list(string)
+        answerList[index1] = string[index2]
+        answerList[index2] = string[index1]
+        answerList = answerList[:index1 + 1] + list(reversed(answerList[index1 + 1:]))
+        for character in answerList:
+            print(character, end='')
+        print()
 
-# wrong answer and tle
+# complete

@@ -4,20 +4,17 @@ for i in range(length):
     temp = input().split()
     arr.append((int(temp[0]), temp[1]))
 
-answerArr = []
-index = 0
-while True:
-    counter = 0
-    for element in arr:
-        if element[0] == index:
-            answerArr.append(element)
-            counter += 1
-    if counter == 0:
-        break
+answerArr = [[] for i in range(length)]
+dashCounter = 0
+for element in arr:
+    if dashCounter < length // 2:
+        answerArr[element[0]].append('-')
+        dashCounter += 1
     else:
-        index += 1
+        answerArr[element[0]].append(element[1])
 
-for element in answerArr:
-    print(*element)
+for element1 in answerArr:
+    for element2 in element1:
+        print(element2, end=' ')
 
-# wrong answer, did not understand problem properly
+# correct

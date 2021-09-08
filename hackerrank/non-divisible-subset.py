@@ -1,19 +1,20 @@
+import math
+
 length, k = list(map(int, input().split()))
-arr = set(map(int, input().split()))
+arr = list(map(lambda x: int(x) % k, input().split()))
 
+setLength = 0
 
-def checkCombination(checkSet, checkNum):
-    for testNum in checkSet:
-        if (testNum + checkNum) % k == 0:
-            return False
-    return True
+for i in range(1, int(math.ceil(k / 2))):
+    count = arr.count(i)
+    complementaryCount = arr.count(k - i)
+    setLength += max(count, complementaryCount)
 
+if k / 2 in arr:
+    setLength += 1
+if 0 in arr:
+    setLength += 1
 
-setList = [{element} for element in arr]
-for element in arr:
-    for currentSet in setList:
-        if checkCombination(currentSet, element):
-            currentSet.add(element)
-print(max([len(element) for element in setList]))
+print(setLength)
 
-# tle
+# correct

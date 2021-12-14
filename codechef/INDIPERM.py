@@ -7,3 +7,5 @@ for _ in range(int(input())):
     arr.append(1)
 
     print(*arr)
+
+# correct

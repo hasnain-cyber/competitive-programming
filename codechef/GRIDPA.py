@@ -12,3 +12,5 @@ for _ in range(int(input())):
     for i in range(n):
         coinsArr.append(list(map(int, input().split())))
     solve((0, 0), gridArr, [])
+
+# incomplete

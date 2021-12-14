@@ -23,3 +23,23 @@ for _ in range(int(input())):
     print(maxSum)
 
 # tle
+
+for _ in range(int(input())):
+    length = int(input())
+    arr = list(map(int, input().split()))
+
+    prefixSumArr = [0]
+    for i, element in enumerate(arr):
+        if i % 2 == 0:
+            prefixSumArr.append(prefixSumArr[-1] + element)
+        else:
+            prefixSumArr.append(prefixSumArr[-1] - element)
+
+    maxSum = prefixSumArr[-1]
+    for i in range(1, length):
+        currentSum = 2 * prefixSumArr[i] - prefixSumArr[-1]
+        if currentSum > maxSum:
+            maxSum = currentSum
+    print(maxSum)
+
+# wrong answer

@@ -1,17 +1,18 @@
 for _ in range(int(input())):
-    n = int(input())
-    heightArr = list(map(int, input().split()))
-    heightArr.reverse()
+    length = int(input())
+    arr = list(map(int, input().split()))
+    arr.reverse()
 
-    counter = 0
-    currentMax = heightArr[0]
-    for i in range(n):
-        if heightArr[i] > currentMax:
-            currentMax = heightArr[i]
-            counter += 1
-    if not currentMax == heightArr[-1]:
+    if max(arr) != arr[-1]:
         print(-1)
     else:
-        print(counter)
+        currentHeight = arr[0]
+        counter = 0
+        for height in arr:
+            if height > currentHeight:
+                counter += 1
+                currentHeight = height
+        print(max(counter, 1))
+
 
 # wrong answer

@@ -1,5 +1,9 @@
+from fractions import Fraction
+
 for _ in range(int(input())):
     n = int(input())
-    print(0.5 % 998244353)
+    tempFraction = Fraction(n * ((n + 1) ** 2) / 4)
+    p, q = tempFraction.numerator, tempFraction.denominator
+    print(p * (q ** -1 % 998244353))
 
-# wrong answer
+# wrong

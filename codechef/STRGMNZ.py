@@ -13,3 +13,5 @@ for _ in range(int(input())):
             value = minValue
             minX = x
     print(minX)
+
+# incomplete

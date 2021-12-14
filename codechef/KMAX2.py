@@ -1,12 +1,19 @@
 for _ in range(int(input())):
-    n, k = list(map(int, input().split()))
+    n, k = tuple(map(int, input().split()))
     arr = list(map(int, input().split()))
 
+    maxValue = max(arr)
+    maxIndices = []
+    for i, element in enumerate(arr):
+        if element == maxValue:
+            maxIndices.append(i)
+
     counter = 0
-    maxArr = max(arr)
-    for i in range(k, n):
-        if arr[i] == maxArr:
-            counter += n - i
+    for index in maxIndices:
+        if index + 1 < k:
+            continue
+        else:
+            counter += n - index
     print(counter)
 
-# wrong answer
+# correct

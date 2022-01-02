@@ -1,11 +1,6 @@
-for _ in range(int(input())):
-    length = int(input())
-    arr = list(map(int, input().split()))
+def main():
+    pass
 
-    counter = 0
-    for index, value in enumerate(arr):
-        if index + 1 >= value:
-            counter += length - index
-    print(counter)
 
-# correct
+if __name__ == "__main__":
+    main()

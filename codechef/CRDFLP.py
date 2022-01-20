@@ -1,24 +1,39 @@
-for _ in range(int(input())):
-    n = int(input())
-    frontArray = list(map(int, input().split()))
-    backArray = list(map(int, input().split()))
+def main():
+    for _ in range(int(input())):
+        n = int(input())
+        front_arr = list(map(lambda x: "{:032b}".format(int(x)), input().split()))
+        back_arr = list(map(lambda x: "{:032b}".format(int(x)), input().split()))
 
-    a1, a2 = frontArray[0], backArray[0]
-    counter1, counter2 = 0, 1
-    for i in range(1, n):
-        if a1 & frontArray[i] > a1 & backArray[i]:
-            a1 = a1 & frontArray[i]
-        else:
-            a1 = a1 & backArray[i]
-            counter1 += 1
-        if a2 & frontArray[i] > a2 & backArray[i]:
-            a2 = a2 & frontArray[i]
-        else:
-            a2 = a2 & backArray[i]
-            counter2 += 1
-    if a1 < a2:
-        print(a2, min(n - counter2, counter2))
-    else:
-        print(a1, min(n - counter1, counter1))
+        for bit_index in range(32):
+            flip_counter = 0
+            break_flag = False
 
-# wrong
+            if front_arr[0][bit_index] == "1":
+                ans = int(front_arr[0], 2)
+            elif back_arr[0][bit_index] == "1":
+                ans = int(back_arr[0], 2)
+                flip_counter += 1
+            else:
+                continue
+
+            for i in range(1, n):
+                if front_arr[i][bit_index] == "1":
+                    ans &= int(front_arr[i], 2)
+                elif back_arr[i][bit_index] == "1":
+                    ans &= int(back_arr[i], 2)
+                    flip_counter += 1
+                else:
+                    break_flag = True
+                    break
+
+            if break_flag or bit_index == 31:
+                print(0, 0)
+            else:
+                print(ans, flip_counter)
+                break
+
+
+if __name__ == "__main__":
+    main()
+
+# wrong answer, can't figure out why

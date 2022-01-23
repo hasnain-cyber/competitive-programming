@@ -1,14 +1,16 @@
 def binary_search_modified(arr, element):
     l, r = 0, len(arr) - 1
 
+    ans = -1
     while l <= r:
         mid = (l + r) // 2
 
         if arr[mid] <= element:
             l = mid + 1
         else:
+            ans = mid
             r = mid - 1
-    return mid
+    return ans
 
 
 def main():
@@ -24,11 +26,10 @@ def main():
             else:
                 answer_arr[found_index] = current_disk_radius
 
-        print(len(answer_arr), *list(sorted(answer_arr)))
+        print(len(answer_arr), *answer_arr)
 
 
 if __name__ == "__main__":
-    # main()
-    print(binary_search_modified([1, 2, 3, 4, 5, 6, 8, 9, 10], 8))
+    main()
 
-# could not solve
+# correct

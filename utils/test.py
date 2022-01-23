@@ -1,5 +1,6 @@
 def main():
-    pass
+    for _ in range(int(input())):
+        pass
 
 
 if __name__ == "__main__":

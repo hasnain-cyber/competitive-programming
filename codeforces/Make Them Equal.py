@@ -1,49 +1,34 @@
-def main():
-    for _ in range(int(input())):
-        n, c = input().split()
-        n = int(n)
-        string = input()
+def d2(arr):
+    d = arr[-1] - arr[0]
+    required_value = arr[0] + d
+    for i in range(1, len(arr)):
+        if required_value not in (arr[i] - d, arr[i], arr[i] + d):
+            print(-1)
+            return
+    print(d)
 
+
+def main():
+    n = int(input())
+    arr = list(map(int, input().split()))
+    arr.sort()
+
+    d = (arr[-1] - arr[0]) / 2
+
+    if d.is_integer():
+        d = int(d)
         flag = True
-        for i in range(n):
-            if string[i] != c:
+        required_value = arr[0] + d
+        for i in range(1, n):
+            if required_value not in (arr[i] - d, arr[i], arr[i] + d):
                 flag = False
                 break
         if flag:
-            print(0)
-        elif string[-1] == c:
-            print(1)
-            print(n)
+            print(d)
         else:
-            required_indices = []
-            for i in range(n):
-                if string[i] != c:
-                    required_indices.append(i + 1)
-
-            current_divisor = n - 1
-            super_flag = False
-            while current_divisor > 0:
-                if string[current_divisor - 1] != c:
-                    current_divisor -= 1
-                    continue
-                else:
-                    flag = True
-                    for index in required_indices:
-                        if index % current_divisor == 0:
-                            flag = False
-                            break
-                    if flag:
-                        super_flag = True
-                        break
-                    else:
-                        current_divisor -= 1
-
-            if super_flag:
-                print(1)
-                print(current_divisor)
-            else:
-                print(2)
-                print(n - 1, n)
+            d2(arr)
+    else:
+        d2(arr)
 
 
 if __name__ == "__main__":

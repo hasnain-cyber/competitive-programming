@@ -31,7 +31,7 @@ def lower_bound_binary_search(arr, x):
             l = mid + 1
         else:
             r = mid - 1
-    return l
+    return r
 
 
 # subarrays

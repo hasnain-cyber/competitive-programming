@@ -1,4 +1,6 @@
 # binary search
+
+
 def binary_search(arr, x):
     l, r = 0, len(arr) - 1
     while l <= r:
@@ -35,6 +37,8 @@ def lower_bound_binary_search(arr, x):
 
 
 # subarrays
+
+
 def subarrs(arr):
     return_arr = []
     for i in range(len(arr)):
@@ -45,7 +49,20 @@ def subarrs(arr):
     return return_arr
 
 
-# number of connected components
+def max_subarr_sum(arr):
+    total_max = float("-inf")
+    max_so_far = 0
+    for i in range(n - 1):
+        max_so_far += arr[i]
+        total_max = max(total_max, max_so_far)
+        max_so_far = max(max_so_far, 0)
+
+    return total_max
+
+
+# graphs
+
+
 class Graph:
     def __init__(self, V):
         self.V = V
@@ -76,3 +93,15 @@ class Graph:
                 temp = []
                 cc.append(self.DFSUtil(temp, v, visited))
         return cc
+
+
+# miscellaneous
+
+
+def primes(n):
+    # Returns  a list of primes < nu
+    sieve = [True] * n
+    for i in range(3, int(n**0.5) + 1, 2):
+        if sieve[i]:
+            sieve[i * i :: 2 * i] = [False] * ((n - i * i - 1) // (2 * i) + 1)
+    return [2] + [i for i in range(3, n, 2) if sieve[i]]

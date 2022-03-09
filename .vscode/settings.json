@@ -1,3 +1,9 @@
 {
-    "python.formatting.provider": "black"
+    "python.formatting.provider": "black",
+    "files.associations": {
+        "map": "cpp",
+        "iostream": "cpp",
+        "bitset": "cpp",
+        "string_view": "cpp"
+    }
 }

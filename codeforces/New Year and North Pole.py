@@ -1,40 +1,34 @@
-import math
-
-
 def main():
-    radius = 40000 / math.pi
-    theta, phi = 0, 0
+    c = 20000
+
+    y = c / 2
+
+    flag = True
     for _ in range(int(input())):
         distance, direction = input().split()
         distance = int(distance)
 
+        new_y = y
         if direction == "North":
-            if theta == 0:
-                print("NO")
-                return
-            else:
-                theta += distance / radius
+            new_y += distance
         elif direction == "South":
-            if theta == 180:
-                print("NO")
-                return
-            else:
-                theta -= distance / radius
-        elif direction == "East":
-            phi += distance / radius * math.sin(theta)
-        elif direction == "West":
-            phi -= distance / radius * math.sin(theta)
+            new_y -= distance
+        else:
+            if y in (c / 2, -c / 2):
+                flag = False
 
-        theta %= 360
-        phi %= 360
+        if not -c / 2 <= new_y <= c / 2:
+            flag = False
+        else:
+            y = new_y
 
-    if theta == 0 and phi == 0:
-        print("YES")
-    else:
-        print("NO")
+    if not y == c / 2:
+        flag = False
+
+    print("YES" if flag else "NO")
 
 
 if __name__ == "__main__":
     main()
 
-# could not solve
+# correct

@@ -50,6 +50,8 @@ def subarrs(arr):
 
 
 def max_subarr_sum(arr):
+    n = len(arr)
+
     total_max = float("-inf")
     max_so_far = 0
     for i in range(n - 1):

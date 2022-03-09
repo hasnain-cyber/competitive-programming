@@ -1,13 +1,9 @@
-from queue import Queue
-
-
 def main():
     n = int(input())
-    edges_dict = {}
 
+    edges_dict = {}
     for _ in range(n - 1):
         u, v = map(int, input().split())
-
         if u not in edges_dict:
             edges_dict[u] = [v]
         else:
@@ -18,29 +14,26 @@ def main():
         else:
             edges_dict[v].append(u)
 
-    current_color = 1
-    colors_array = [0 for _ in range(n)]
-    visited = [False for _ in range(n)]
+    colors_dict = {1: 0}
 
-    stack = []
-    stack.append(1)
-    while len(stack) > 0:
-        current_node = stack.pop()
-        visited[current_node - 1] = True
-        colors_array[current_node - 1] = current_color
-        current_color = 1 - current_color
+    bfs_set = {1}
+    while len(bfs_set) > 0:
+        temp_set = set()
+        for node in bfs_set:
+            for neighbor in edges_dict[node]:
+                if neighbor not in colors_dict:
+                    colors_dict[neighbor] = 1 - colors_dict[node]
+                    temp_set.add(neighbor)
+        bfs_set = temp_set
 
-        for neighbor in edges_dict[current_node]:
-            if not visited[neighbor - 1]:
-                stack.append(neighbor)
-
-    zero_nodes = colors_array.count(0)
+    zero_nodes = list(colors_dict.values()).count(0)
     one_nodes = n - zero_nodes
+    possible_edges = zero_nodes * one_nodes
 
-    print(zero_nodes * one_nodes - n + 1)
+    print(possible_edges - (n - 1))
 
 
 if __name__ == "__main__":
     main()
 
-# giving wrong answer in the second test case
+# correct

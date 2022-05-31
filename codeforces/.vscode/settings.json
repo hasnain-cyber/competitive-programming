@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "cmath": "cpp",
+        "ostream": "cpp",
+        "limits": "cpp",
+        "__node_handle": "cpp",
+        "utility": "cpp",
+        "iosfwd": "cpp",
+        "iterator": "cpp",
+        "vector": "cpp",
+        "chrono": "cpp",
+        "complex": "cpp",
+        "valarray": "cpp",
+        "random": "cpp",
+        "algorithm": "cpp",
+        "span": "cpp",
+        "memory": "cpp",
+        "regex": "cpp"
+    }
+}

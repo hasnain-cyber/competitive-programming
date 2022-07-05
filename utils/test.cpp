@@ -9,14 +9,28 @@ typedef long double ld;
 
 using namespace std;
 
-struct ListNode {
-    int val;
-    ListNode* next;
-    ListNode(int x) : val(x), next(NULL) {}
-};
+vector<int> solve(vector<int> &arr, int k) {
+    int n = arr.size();
+
+    map<int, int> current_indices;
+    for (int i = 0; i < n; i++) current_indices[arr[i]] = i;
+
+    for (int i = 0; i < n && k > 0; i++) {
+        int current_index = current_indices[n - i];
+        if (current_index != i) {
+            // swap
+            swap(arr[current_index], arr[i]);
+            current_indices[arr[i]] = i;
+            current_indices[arr[current_index]] = current_index;
+            k--;
+        }
+    }
+
+    return arr;
+}
 
 int main() {
-    ListNode* temp = new ListNode(14);
-    temp->val = 14;
-    cout << temp->val << endl;
+    vector<int> arr = {1, 2, 3, 4};
+    for (auto element : solve(arr, 1)) cout << element << " ";
+    cout << endl;
 }

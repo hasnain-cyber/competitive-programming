@@ -1,2 +1,1 @@
-
-using namespace std
+cout << i << " " << w << " " << value << endl;

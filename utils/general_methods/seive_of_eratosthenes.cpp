@@ -14,9 +14,7 @@ vector<bool> seive(ll n) {
     is_prime[0] = is_prime[1] = false;
     for (ll i = 2; i * i <= n; i++) {
         if (is_prime[i]) {
-            for (ll j = i * i; j <= n; j += i) {
-                is_prime[j] = false;
-            }
+            for (ll j = i * i; j <= n; j += i) is_prime[j] = false;
         }
     }
 
@@ -26,9 +24,9 @@ vector<bool> seive(ll n) {
 int main() {
     int n = 100;
     vector<bool> ans = seive(n);
-    
-    for(int i = 0; i <= n; i++) {
-        if(ans[i]) {
+
+    for (int i = 0; i <= n; i++) {
+        if (ans[i]) {
             cout << i << " ";
         }
     }

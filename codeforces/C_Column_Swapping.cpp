@@ -15,54 +15,44 @@ int main() {
     while (t--) {
         ll n, m;
         cin >> n >> m;
-        pair<ll, ll> arr[n][m], duplicate_arr[n][m];
+        ll arr[n][m];
         for (ll i = 0; i < n; i++) {
-            for (ll j = 0; j < m; j++) {
-                ll value;
-                cin >> value;
-                arr[i][j] = make_pair(value, j);
-                duplicate_arr[i][j] = make_pair(value, j);
-            }
+            for (ll j = 0; j < m; j++) cin >> arr[i][j];
         }
 
-        for (ll i = 0; i < n; i++) {
-            sort(arr[i], arr[i] + m);
-        }
-
-        set<pair<ll, ll>> swap_indices;
-        for (ll i = 0; i < n; i++) {
-            for (ll j = 0; j < m; j++) {
-                if (arr[i][j].second != j) {
-                    swap_indices.insert(make_pair(min(j, arr[i][j].second), max(j, arr[i][j].second)));
-                }
-            }
-        }
-
-        if (swap_indices.empty()) {
-            cout << "1 1" << endl;
-        } else if (swap_indices.size() == 1) {
-            ll a, b;
-            for (auto it : swap_indices) {
-                a = it.first;
-                b = it.second;
-                break;
-            }
-
-            bool flag = true;
-            for (ll i = 0; i < n; i++) {
-                if (duplicate_arr[i][a].first < duplicate_arr[i][b].first) {
+        bool flag = true;
+        pair<ll, ll> ans;
+        for (ll i = 0; i < n && flag; i++) {
+            for (ll j = 0; j < m - 1 && flag; j++) {
+                if (arr[i][j] > arr[i][j + 1]) {
+                    ans.first = j;
+                    while (j < m - 1 && arr[i][j] > arr[i][j + 1]) {
+                        // swap two columns
+                        for (ll k = 0; k < n; k++) swap(arr[k][j], arr[k][j + 1]);
+                        j++;
+                    }
                     flag = false;
-                    break;
+                    ans.second = j;
+                }
+            }
+        }
+
+        if (flag)
+            cout << "1 1" << endl;
+        else {
+            bool flag = true;
+            for (ll i = 0; i < n && flag; i++) {
+                for (ll j = 0; j < m - 1 && flag; j++) {
+                    if (arr[i][j] > arr[i][j + 1]) {
+                        flag = false;
+                    }
                 }
             }
 
-            if (flag) {
-                cout << a + 1 << " " << b + 1 << endl;
-            } else {
+            if (flag)
+                cout << ans.first + 1 << " " << ans.second + 1 << endl;
+            else
                 cout << -1 << endl;
-            }
-        } else {
-            cout << -1 << endl;
         }
     }
 }

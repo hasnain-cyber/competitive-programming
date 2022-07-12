@@ -23,10 +23,27 @@ void sort_arr(vector<int> &arr) {
 }
 
 void solve_testcase() {
-    int n;
-    cin >> n;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) cin >> arr[i];
+    string arr;
+    cin >> arr;
+    int n = arr.size();
+
+    set<int> st;
+    int ans = 0;
+    for (int i = 0; i < n; i++) {
+        if (st.count(arr[i])) {
+            continue;
+        } else {
+            if (st.size() < 3) {
+                st.insert(arr[i]);
+            } else {
+                ans++;
+                st.clear();
+                st.insert(arr[i]);
+            }
+        }
+    }
+
+    cout << ans + 1 << endl;
 }
 
 int32_t main() {

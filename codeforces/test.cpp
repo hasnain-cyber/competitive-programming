@@ -6,17 +6,18 @@
 
 #define int long long int
 #define double long double
+#define pii pair<int, int>
 
 #define endl '\n'
 
 using namespace std;
 
-void print_arr(vector<int> arr) {
+void print_arr(vector<int> &arr) {
     for (int element : arr) cout << element << ' ';
     cout << endl;
 }
 
-void sort_arr(vector<int> arr) {
+void sort_arr(vector<int> &arr) {
     sort(arr.begin(), arr.end());
 }
 

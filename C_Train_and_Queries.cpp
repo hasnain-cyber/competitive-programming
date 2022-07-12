@@ -23,10 +23,30 @@ void sort_arr(vector<int> &arr) {
 }
 
 void solve_testcase() {
-    int n;
-    cin >> n;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) cin >> arr[i];
+    int n, k;
+    cin >> n >> k;
+    map<int, vector<int>> mp;
+    for (int i = 0; i < n; i++) {
+        int value;
+        cin >> value;
+        mp[value].push_back(i);
+    }
+
+    while (k--) {
+        int a, b;
+        cin >> a >> b;
+
+        if (!mp.count(a) || !mp.count(b)) {
+            cout << "NO" << endl;
+            continue;
+        }
+
+        if (mp[a][0] <= mp[b][mp[b].size() - 1]) {
+            cout << "YES" << endl;
+        } else {
+            cout << "NO" << endl;
+        }
+    }
 }
 
 int32_t main() {

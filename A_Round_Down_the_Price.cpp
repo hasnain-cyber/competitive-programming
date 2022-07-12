@@ -25,8 +25,9 @@ void sort_arr(vector<int> &arr) {
 void solve_testcase() {
     int n;
     cin >> n;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) cin >> arr[i];
+
+    int k = log10(n);
+    cout << fixed << (int)(n - pow(10, k)) << endl;
 }
 
 int32_t main() {

@@ -26,27 +26,37 @@ void sort_arr(vector<T> &arr) {
 }
 
 void solve_testcase() {
-    int n;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
     vector<int> arr(n);
     for (int i = 0; i < n; i++) {
-        int value;
-        cin >> value;
-        value = abs(value);
-        arr[i] = value;
-    }
-    sort_arr(arr);
-
-    int ans = 0;
-    for (int i = 0; i < n; i++) {
-        int x = arr[i];
-        int index = upper_bound(arr.begin(), arr.end(), 2 * x) - arr.begin();
-        index--;
-
-        ans += (index - i);
+        cin >> arr[i];
     }
 
-    cout << ans << endl;
+    // preprocess
+    vector<int> prefix1(n);
+    prefix1[0] = 0;
+    for (int i = 1; i < n; i++) {
+        prefix1[i] = prefix1[i - 1] + max((int)0, arr[i - 1] - arr[i]);
+    }
+
+    vector<int> prefix2(n);
+    prefix2[n - 1] = 0;
+    for (int i = n - 2; i >= 0; i--) {
+        prefix2[i] = prefix2[i + 1] + max((int)0, arr[i + 1] - arr[i]);
+    }
+
+    while (m--) {
+        int i, j;
+        cin >> i >> j;
+        i--, j--;
+
+        if (i <= j) {
+            cout << prefix1[j] - prefix1[i] << endl;
+        } else {
+            cout << prefix2[j] - prefix2[i] << endl;
+        }
+    }
 }
 
 int32_t main() {

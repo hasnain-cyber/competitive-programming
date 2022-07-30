@@ -26,13 +26,29 @@ void sort_arr(vector<T> &arr) {
 }
 
 void solve_testcase() {
-    
+    int n, a, b;
+    cin >> a >> b >> n;
+
+    if (a % b == 0) {
+        cout << -1 << endl;
+        return;
+    }
+
+    for (int value = ceil(n / (double)a) * a; true; value += a) {
+        if (value % b != 0) {
+            cout << value << endl;
+            return;
+        }
+    }
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    priority_queue<int> pq;
-    pq.
+    int t;
+    cin >> t;
+    while (t--) {
+        solve_testcase();
+    }
 }

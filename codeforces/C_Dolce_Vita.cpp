@@ -26,13 +26,35 @@ void sort_arr(vector<T> &arr) {
 }
 
 void solve_testcase() {
-    
+    int n, total;
+    cin >> n >> total;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    sort_arr(arr);
+
+    int ans = 0;
+    int prev = 0;
+    for (int i = 0; i < n; i++) {
+        prev += arr[i];
+        if (prev > total) {
+            break;
+        }
+        int curr = (total - prev) / (i + 1) + 1;
+        ans += curr;
+    }
+
+    cout << ans << endl;
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    priority_queue<int> pq;
-    pq.
+    int t;
+    cin >> t;
+    while (t--) {
+        solve_testcase();
+    }
 }

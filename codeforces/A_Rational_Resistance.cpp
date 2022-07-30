@@ -25,14 +25,30 @@ void sort_arr(vector<T> &arr) {
     sort(arr.begin(), arr.end());
 }
 
+int gcd(int a, int b) {
+    if (b > a) {
+        return gcd(b, a);
+    } else if (b == 1) {
+        return a;
+    }
+
+    return a / b + gcd(b, a % b);
+}
+
 void solve_testcase() {
-    
+    int a, b;
+    cin >> a >> b;
+
+    cout << gcd(a, b) << endl;
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    priority_queue<int> pq;
-    pq.
+    int t;
+    t = 1;
+    while (t--) {
+        solve_testcase();
+    }
 }

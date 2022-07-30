@@ -30,23 +30,35 @@ void solve_testcase() {
     cin >> n;
     vector<int> arr(n);
     for (int i = 0; i < n; i++) {
-        int value;
-        cin >> value;
-        value = abs(value);
-        arr[i] = value;
+        cin >> arr[i];
     }
-    sort_arr(arr);
+    vector<int> sorted_arr = arr;
+    sort_arr(sorted_arr);
 
-    int ans = 0;
-    for (int i = 0; i < n; i++) {
-        int x = arr[i];
-        int index = upper_bound(arr.begin(), arr.end(), 2 * x) - arr.begin();
-        index--;
-
-        ans += (index - i);
+    int i = 0, j = 0;
+    vector<int> p, q;
+    while (i < n) {
+        if (arr[i] == sorted_arr[j]) {
+            p.push_back(arr[i]);
+            i++, j++;
+        } else {
+            q.push_back(arr[i]);
+            i++;
+        }
     }
 
-    cout << ans << endl;
+    for (int ele : q) {
+        p.push_back(ele);
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        if (p[i] > p[i + 1]) {
+            cout << "NO" << endl;
+            return;
+        }
+    }
+
+    cout << "YES" << endl;
 }
 
 int32_t main() {
@@ -54,7 +66,7 @@ int32_t main() {
     cin.tie(NULL);
 
     int t;
-    t = 1;
+    cin >> t;
     while (t--) {
         solve_testcase();
     }

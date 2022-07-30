@@ -26,13 +26,31 @@ void sort_arr(vector<T> &arr) {
 }
 
 void solve_testcase() {
-    
+    int n, m;
+    cin >> n >> m;
+
+    int left = n;
+    int right = m - m % left;
+    pair<int, int> ans = {n, m - m % left};
+    while (left < right && left <= 2 * n) {
+        if (ans.second - ans.first < right - left) {
+            ans = {left, right};
+        }
+
+        left++;
+        right = m - m % left;
+    }
+
+    cout << ans.first << " " << ans.second << endl;
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    priority_queue<int> pq;
-    pq.
+    int t;
+    cin >> t;
+    while (t--) {
+        solve_testcase();
+    }
 }

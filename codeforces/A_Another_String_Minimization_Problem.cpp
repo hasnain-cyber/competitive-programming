@@ -26,27 +26,34 @@ void sort_arr(vector<T> &arr) {
 }
 
 void solve_testcase() {
-    int n;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
     vector<int> arr(n);
     for (int i = 0; i < n; i++) {
-        int value;
-        cin >> value;
-        value = abs(value);
-        arr[i] = value;
+        cin >> arr[i];
     }
-    sort_arr(arr);
 
-    int ans = 0;
+    string s;
+    for (int i = 0; i < m; i++) {
+        s.push_back('B');
+    }
+
     for (int i = 0; i < n; i++) {
-        int x = arr[i];
-        int index = upper_bound(arr.begin(), arr.end(), 2 * x) - arr.begin();
-        index--;
+        int index1 = arr[i] - 1;
+        int index2 = m - index1 - 1;
 
-        ans += (index - i);
+        if (index1 > index2) {
+            swap(index1, index2);
+        }
+
+        if (s[index1] == 'B') {
+            s[index1] = 'A';
+        } else {
+            s[index2] = 'A';
+        }
     }
 
-    cout << ans << endl;
+    cout << s << endl;
 }
 
 int32_t main() {
@@ -54,7 +61,7 @@ int32_t main() {
     cin.tie(NULL);
 
     int t;
-    t = 1;
+    cin >> t;
     while (t--) {
         solve_testcase();
     }

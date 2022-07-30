@@ -26,13 +26,34 @@ void sort_arr(vector<T> &arr) {
 }
 
 void solve_testcase() {
-    
+    string s;
+    cin >> s;
+    int n = s.size();
+
+    vector<bool> check(26, false);
+    int ans = 0;
+    for (int i = 0; i < n; i++) {
+        int value = s[i] - 'a';
+        if (check[value]) {
+            ans += 2;
+            for (int i = 0; i < 26; i++) {
+                check[i] = false;
+            }
+        } else {
+            check[value] = true;
+        }
+    }
+
+    cout << n - ans << endl;
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    priority_queue<int> pq;
-    pq.
+    int t;
+    cin >> t;
+    while (t--) {
+        solve_testcase();
+    }
 }

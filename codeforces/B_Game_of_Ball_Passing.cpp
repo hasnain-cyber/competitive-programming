@@ -26,13 +26,38 @@ void sort_arr(vector<T> &arr) {
 }
 
 void solve_testcase() {
-    
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    int s = 0;
+    for (int i = 0; i < n; i++) {
+        s += arr[i];
+    }
+    int max_value = *max_element(arr.begin(), arr.end());
+
+    if (s == 0) {
+        cout << 0 << endl;
+        return;
+    }
+
+    if (2 * max_value > s) {
+        cout << 2 * max_value - s << endl;
+    } else {
+        cout << 1 << endl;
+    }
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    priority_queue<int> pq;
-    pq.
+    int t;
+    cin >> t;
+    while (t--) {
+        solve_testcase();
+    }
 }

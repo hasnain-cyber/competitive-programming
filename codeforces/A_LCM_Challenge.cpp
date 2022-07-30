@@ -28,25 +28,32 @@ void sort_arr(vector<T> &arr) {
 void solve_testcase() {
     int n;
     cin >> n;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) {
-        int value;
-        cin >> value;
-        value = abs(value);
-        arr[i] = value;
+
+    if (n == 1) {
+        cout << 1 << endl;
+        return;
     }
-    sort_arr(arr);
+    if (n == 2) {
+        cout << 2 << endl;
+        return;
+    } else {
+        if (n & 1) {
+            cout << n * (n - 1) * (n - 2) << endl;
+        } else {
+            // shift by 1 to get odd;
+            int ans = (n - 1) * (n - 2) * (n - 3);
 
-    int ans = 0;
-    for (int i = 0; i < n; i++) {
-        int x = arr[i];
-        int index = upper_bound(arr.begin(), arr.end(), 2 * x) - arr.begin();
-        index--;
+            for (int i = max(n - 50, (int)1); i <= n; i++) {
+                for (int j = max(n - 50, (int)1); j <= n; j++) {
+                    for (int k = max(n - 50, (int)1); k <= n; k++) {
+                        ans = max(ans, lcm(i, lcm(j, k)));
+                    }
+                }
+            }
 
-        ans += (index - i);
+            cout << ans << endl;
+        }
     }
-
-    cout << ans << endl;
 }
 
 int32_t main() {

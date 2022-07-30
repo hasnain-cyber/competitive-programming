@@ -28,25 +28,30 @@ void sort_arr(vector<T> &arr) {
 void solve_testcase() {
     int n;
     cin >> n;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) {
-        int value;
-        cin >> value;
-        value = abs(value);
-        arr[i] = value;
+    string s;
+    cin >> s;
+
+    set<char> vowels = {'a', 'e', 'i', 'o', 'u'};
+    bool flag = true;
+    for (int i = 0; i < n - 3; i++) {
+        int counter = 0;
+        for (int j = i; j < i + 4; j++) {
+            if (!vowels.count(s[j])) {
+                counter++;
+            }
+        }
+
+        if (counter >= 4) {
+            flag = false;
+            break;
+        }
     }
-    sort_arr(arr);
 
-    int ans = 0;
-    for (int i = 0; i < n; i++) {
-        int x = arr[i];
-        int index = upper_bound(arr.begin(), arr.end(), 2 * x) - arr.begin();
-        index--;
-
-        ans += (index - i);
+    if (flag) {
+        cout << "YES" << endl;
+    } else {
+        cout << "NO" << endl;
     }
-
-    cout << ans << endl;
 }
 
 int32_t main() {
@@ -54,7 +59,7 @@ int32_t main() {
     cin.tie(NULL);
 
     int t;
-    t = 1;
+    cin >> t;
     while (t--) {
         solve_testcase();
     }

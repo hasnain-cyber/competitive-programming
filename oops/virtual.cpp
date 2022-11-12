@@ -19,7 +19,7 @@ class Child : public Base {
 };
 
 int32_t main() {
-    Base *base_pointer;
+    Base *base_pointer;t
     Child child;
     base_pointer = &child;
 

@@ -1,38 +1,39 @@
 #include <bits/stdc++.h>
 
-#define MOD 1000000007
-//#define MOD 998244353
-#define infinity numeric_limits<int>::max()
-
-#define int long long int
-#define double long double
-#define pii pair<int, int>
-
-#define endl '\n'
-
 using namespace std;
 
-template <typename T>
-void print_arr(vector<T> &arr) {
-    for (T element : arr) {
-        cout << element << ' ';
+int mod;
+int find_value(vector<int> &a, vector<int> &b, int n) {
+    int i = 0, j = n - 1;
+    int ans = 0;
+    while (i < n) {
+        ans = (ans + (a[i] * b[j]) % mod) % mod;
+        i++, j--;
     }
-    cout << endl;
+
+    return ans;
 }
 
-template <typename T>
-void sort_arr(vector<T> &arr) {
-    sort(arr.begin(), arr.end());
-}
+int main() {
+    mod = pow(10, 9) + 7;
 
-void solve_testcase() {
-    
-}
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int> > arr(n, vector<int>(m));
+    for (int i = 0; i < n; i++) {
+        vector<int> temp(m);
+        for (int j = 0; j < m; j++) cin >> temp[j];
 
-int32_t main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+        sort(temp.begin(), temp.end());
+        arr[i] = temp;
+    }
 
-    priority_queue<int> pq;
-    pq.
+    int ans = INT_MIN;
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            ans = max(ans, find_value(arr[i], arr[j], n));
+        }
+    }
+
+    cout << ans << endl;
 }

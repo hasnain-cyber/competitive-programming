@@ -25,30 +25,36 @@ void sort_arr(vector<T> &arr) {
     sort(arr.begin(), arr.end());
 }
 
-int count_factors(int n) {
-    int count = 0;
-    for (int i = 1; i <= sqrt(n); i++) {
-        if (n % i == 0) {
-            if (n / i == i) {
-                count++;
-            } else {
-                count += 2;
-            }
-        }
-    }
-    return count;
-}
-
 void solve_testcase() {
-    for (int i = 1;; i++) {
-        int n = i * (i + 1) / 2;
-        int n_factors = count_factors(n);
-        cout << n << ' ' << n_factors << endl;
-        if (n_factors > 500) {
-            cout << n << endl;
-            break;
-        }
+    int n, m;
+    cin >> n >> m;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
     }
+
+    vector<int> temp_arr = arr;
+    sort_arr(temp_arr);
+
+    if (temp_arr[0] > m) {
+        cout << n + 1 << endl;
+        return;
+    }
+
+    int max_value = -infinity;
+    int x = 0, s = 0;
+    for (int i = 0; i < n && s + temp_arr[i] <= m; i++) {
+        s += temp_arr[i];
+        x++;
+        max_value = max(max_value, temp_arr[i]);
+    }
+
+    int ans = n - x + 1;
+    if (x < n && s - max_value + arr[x] <= m) {
+        ans--;
+    }
+
+    cout << ans << endl;
 }
 
 int32_t main() {
@@ -56,7 +62,7 @@ int32_t main() {
     cin.tie(NULL);
 
     int t;
-    t = 1;
+    cin >> t;
     for (int i = 1; i <= t; i++) {
         solve_testcase();
     }

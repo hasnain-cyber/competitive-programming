@@ -26,12 +26,18 @@ void sort_arr(vector<T> &arr) {
 }
 
 void solve_testcase() {
-    int n;
-    cin >> n;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+    int n, x, p;
+    cin >> n >> x >> p;
+
+    for (int i = 1; i <= min(2 * n, p); i++) {
+        int value = x + (i * (i + 1)) / 2;
+        if (value % n == 0) {
+            cout << "Yes" << endl;
+            return;
+        }
     }
+
+    cout << "No" << endl;
 }
 
 int32_t main() {

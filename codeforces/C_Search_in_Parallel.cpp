@@ -26,12 +26,30 @@ void sort_arr(vector<T> &arr) {
 }
 
 void solve_testcase() {
-    int n;
-    cin >> n;
-    vector<int> arr(n);
+    int n, s1, s2;
+    cin >> n >> s1 >> s2;
+    vector<pair<int, int>> arr(n);
     for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+        cin >> arr[i].first;
+        arr[i].second = i + 1;
     }
+
+    vector<int> ans1, ans2;
+    sort(arr.begin(), arr.end());
+    reverse(arr.begin(), arr.end());
+
+    for (int i = 0; i < n; i++) {
+        if (s1 * (ans1.size() + 1) < s2 * (ans2.size() + 1)) {
+            ans1.push_back(arr[i].second);
+        } else {
+            ans2.push_back(arr[i].second);
+        }
+    }
+
+    cout << ans1.size() << " ";
+    print_arr(ans1);
+    cout << ans2.size() << " ";
+    print_arr(ans2);
 }
 
 int32_t main() {

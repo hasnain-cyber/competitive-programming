@@ -28,10 +28,34 @@ void sort_arr(vector<T> &arr) {
 void solve_testcase() {
     int n;
     cin >> n;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+    string s;
+    cin >> s;
+
+    if (n & 1) {
+        cout << -1 << endl;
+        return;
     }
+
+    map<char, int> freq;
+    for (char c : s) {
+        freq[c]++;
+        if (freq[c] > n / 2) {
+            cout << -1 << endl;
+            return;
+        }
+    }
+
+    map<char, int> matching_freq;
+    int max_matching_pairs = 0, total_matching_pairs = 0;
+    for (int i = 0; i < n / 2; i++) {
+        if (s[i] == s[n - i - 1]) {
+            matching_freq[s[i]]++;
+            total_matching_pairs++;
+            max_matching_pairs = max(max_matching_pairs, matching_freq[s[i]]);
+        }
+    }
+
+    cout << max(max_matching_pairs, (int)ceil(total_matching_pairs / 2.0)) << endl;
 }
 
 int32_t main() {

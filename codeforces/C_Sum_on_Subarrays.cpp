@@ -26,12 +26,29 @@ void sort_arr(vector<T> &arr) {
 }
 
 void solve_testcase() {
-    int n;
-    cin >> n;
-    vector<int> arr(n);
+    int n, k;
+    cin >> n >> k;
+
+    vector<int> ans(n);
     for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+        if (k > n - i) {
+            ans[i] = 1000;
+            k = k - (n - i);
+        } else {
+            ans[i] = k;
+            // fill the next (k - 1) elements with -1
+            for (int j = i + 1; j < i + k; j++) {
+                ans[j] = -1;
+            }
+            // fill the remaining elements with -2
+            for (int j = i + k; j < n; j++) {
+                ans[j] = -2;
+            }
+            break;
+        }
     }
+
+    print_arr(ans);
 }
 
 int32_t main() {

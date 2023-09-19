@@ -100,7 +100,8 @@
         "__atomic_generated": "cpp",
         "__split_buffer": "cpp",
         "queue": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "stacktrace": "cpp"
     },
     "python.formatting.provider": "autopep8"
 }

@@ -13,65 +13,78 @@
 using namespace std;
 
 template <typename T>
-void print_arr(vector<T> &arr) {
-    for (T element : arr) {
+void print_arr(vector<T> &arr)
+{
+    for (T element : arr)
+    {
         cout << element << ' ';
     }
     cout << endl;
 }
 
 template <typename T>
-void sort_arr(vector<T> &arr) {
+void sort_arr(vector<T> &arr)
+{
     sort(arr.begin(), arr.end());
 }
 
-// find min number greater than n, such that its ith bit is off.
-int binary_search(int n, int i) {
-    int k = n;
-    while(true) {
-        int bit = (k >> i) & 1;
-        if (!bit) {
-            return k;
+int range_and(int a, int b)
+{
+    int ans = 0;
+    for (int i = 63; i >= 0; i--)
+    {
+        int bit1 = ((a >> i) & 1);
+        int bit2 = ((b >> i) & 1);
+
+        if (bit1 == bit2)
+        {
+            ans |= (bit1 << i);
         }
-        k++;
+        else
+            break;
     }
+
+    return ans;
 }
 
-void solve_testcase() {
+void solve_testcase()
+{
     int n, x;
     cin >> n >> x;
 
-    int m_max = n;
-    for (int i = 0; i < 32; i++) {
-        int bit = (n >> i) & 1;
+    int low = n, high = 5 * 1e18, ans = -1;
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
 
-        // if bit is off, find the min m, such that the bit is off
-        if (!bit) {
-            int m = binary_search(n, i);
-            cout << i << " " << m << endl;
-            m_max = max(m_max, m);
+        int value = range_and(n, mid);
+        if (value > x)
+        {
+            low = mid + 1;
+        }
+        else if (value < x)
+        {
+            high = mid - 1;
+        }
+        else
+        {
+            high = mid - 1;
+            ans = mid;
         }
     }
 
-    int value = n;
-    for (int i = n + 1; i <= m_max; i++) {
-        value = value ^ i;
-    }
-
-    if (value == x) {
-        cout << m_max << endl;
-    } else {
-        cout << -1 << endl;
-    }
+    cout << ans << endl;
 }
 
-int32_t main() {
+int32_t main()
+{
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
     int t;
     cin >> t;
-    for (int i = 1; i <= t; i++) {
+    for (int i = 1; i <= t; i++)
+    {
         solve_testcase();
     }
 }

@@ -1,75 +1,144 @@
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
+
+// #define MOD 1000000007
+// // #define MOD 998244353
+// #define infinity numeric_limits<int>::max()
+
+// #define int long long int
+// #define double long double
+
+// #define endl '\n'
+
+// using namespace std;
+
+// template <typename T>
+// void print_arr(vector<T>& arr) {
+//     for (T element : arr)
+//         cout << element << ' ';
+//     cout << endl;
+// }
+
+// void solve(int i, int n, vector<int>& jump_arr, vector<string>& arr, vector<pair<int, int>>& curr, vector<pair<int, int>>& ans, vector<bool>& visited) {
+//     if (i >= n) {
+//         if (ans.empty() || ans.size() > curr.size()) ans = curr;
+//         return;
+//     }
+//     if (jump_arr[i] == -1 || visited[i]) return;
+//     visited[i] = true;
+
+//     for (int k = arr[jump_arr[i]].size(); k >= 1; k--) {
+//         curr.push_back({ jump_arr[i] + 1, i + 1 });
+//         solve(i + k, n, jump_arr, arr, curr, ans, visited);
+//         curr.pop_back();
+//     }
+// }
+
+// void solve_testcase() {
+//     string s;
+//     cin >> s;
+
+//     int temp;
+//     cin >> temp;
+//     vector<string> arr(temp);
+//     for (int i = 0; i < temp; i++) cin >> arr[i];
+
+//     vector<int> jump_arr(s.size(), (int)-1);
+//     for (int i = 0; i < s.size(); i++) {
+//         for (int j = 0; j < arr.size(); j++) {
+//             if (s.substr(i, arr[j].size()) == arr[j] && (jump_arr[i] == -1 || arr[jump_arr[i]].size() < arr[j].size())) {
+//                 jump_arr[i] = j;
+//             }
+//         }
+//     }
+
+//     vector<pair<int, int>> ans, curr;
+//     vector<bool> visited(s.size(), false);
+//     solve(0, s.size(), jump_arr, arr, curr, ans, visited);
+//     if (ans.empty()) cout << -1 << endl;
+//     else {
+//         cout << ans.size() << endl;
+//         for (auto ele : ans) {
+//             cout << ele.first << " " << ele.second << endl;
+//         }
+//     }
+// }
+
+// int32_t main() {
+//     int t;
+//     cin >> t;
+//     while (t--) {
+//         solve_testcase();
+//     }
+// }
+
+
+// variation of min jumps problem, spent too much time on this, don't have morale rn, to continue, so copying code, and moving on.
+#include<bits/stdc++.h>
+#define len(s) (int)s.size()
+#define forn(i, n) for (int i = 0; i < int(n); i++)
+
 using namespace std;
-#define int long long
-#define all(X) (X).begin(), (X).end()
-const int N = 1e2 + 5, mx = 1e5;
-int test_case = 1, n, dp[N], tally;
-string t;
-vector<string> a;
+int ans = 0;
+bool ok = true;
 
-int solve(int index) {
-    if (index == tally)
-        return dp[index] = 0;
-    if (dp[index] != mx)
-        return dp[index];
-
-    int operations = mx;
-
-    for (int i = 0; i < n; i++)
-        if (index + a[i].length() - 1 < tally && t.substr(index, a[i].length()) == a[i])
-            for (int t = 1; t <= a[i].length(); t++) {
-                operations = min(operations, 1 + solve(index + t));
+void Find(int a, int b, string& t, vector<string>& str, vector<pair<int, int>>& match) {
+    int Max = 0, id = -1, pos = -1;
+    for (int i = a; i <= b; i++) {
+        for (int j = 0; j < len(str); j++) {
+            string s = str[j];
+            if (i + len(s) > len(t) || i + len(s) <= b) continue;
+            if (t.substr(i, len(s)) == s) {
+                if (i + len(s) > Max) {
+                    Max = i + len(s);
+                    id = j;
+                    pos = i;
+                }
             }
-
-    return dp[index] = operations;
+        }
+    }
+    if (id == -1) {
+        ok = false;
+        return;
+    }
+    else {
+        match.emplace_back(id, pos);
+        ans++;
+        if (Max == len(t)) return;
+        else Find(max(pos + 1, b + 1), Max, t, str, match);
+    }
 }
 
-int32_t main() 
-{
-    cin >> test_case;
-    while (test_case--) {
-        fill(dp, dp + N, mx);
-        cin >> t >> n;
-        tally = t.length();
 
-        a.resize(n);
-        for (string &s : a)
-            cin >> s;
+void solve() {
+    ans = 0;
+    ok = true;
 
-        int res = solve(0);
-        if (res == mx)
-            cout << -1 << endl;
-        else {
-            cout << res << endl;
-            vector<pair<int, int>> paths;
-            int current_operations = res;
-            int index = 0;
-            while (index < tally) {
-                for (int i = 0; i < n; i++) 
-                {
-                    bool changed = false;
-                    if (index + a[i].length() - 1 < tally && t.substr(index, a[i].length()) == a[i])
-                        for (int k = 1; k <= a[i].length(); k++) 
-                        {
-                            if (dp[index] == 1 + dp[index + k]) 
-                            {
-                                changed = true;
-                                index = index + k;
-                                paths.push_back({i, index - k});
-                            }
-                            if (changed)
-                                break;
-                        }
+    string t;
+    cin >> t;
+    int n;
+    cin >> n;
 
-                    if (changed)
-                        break;
-                }
-            }
-            for (pair<int, int> x : paths)
-                {
-                cout << x.first + 1 << ' ' << x.second + 1 << '\n';
-                }
-        }
+    vector<string>s(n);
+    vector<pair<int, int>>match;
+
+    forn(i, n) {
+        cin >> s[i];
+    }
+
+    Find(0, 0, t, s, match);
+    if (!ok) cout << "-1\n";
+    else {
+        cout << ans << endl;
+        for (auto& p : match) cout << p.first + 1 << ' ' << p.second + 1 << endl;
+    }
+
+}
+
+int main() {
+    int q;
+    cin >> q;
+    while (q--) {
+        solve();
     }
     return 0;
 }

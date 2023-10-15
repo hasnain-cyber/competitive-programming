@@ -19,36 +19,29 @@ void print_arr(vector<T>& arr) {
 }
 
 void solve_testcase() {
-    int n, m;
-    cin >> n >> m;
+    int n;
+    cin >> n;
     vector<int> arr(n);
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
-    m--;
 
-    priority_queue<int> pq1;
-    int ans = 0;
-    int curr_sum = 0;
-    for (int i = m; i > 0; i--) {
-        pq1.push(arr[i]);
-        curr_sum += arr[i];
-        if (curr_sum > 0) {
-            curr_sum -= 2 * pq1.top();
+    int s = 0, ans = 0;
+    priority_queue<int, vector<int>, greater<int>> pq;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] >= 0 || (s + arr[i] >= 0)) {
             ans++;
-            pq1.pop();
+            pq.push(arr[i]);
+            s += arr[i];
         }
-    }
-
-    priority_queue<int, vector<int>, greater<int>> pq2;
-    curr_sum = 0;
-    for (int i = m + 1; i < n; i++) {
-        pq2.push(arr[i]);
-        curr_sum += arr[i];
-        if (curr_sum < 0) {
-            curr_sum += 2 * (-pq2.top());
-            ans++;
-            pq2.pop();
+        else {
+            if (pq.empty() || pq.top() >= arr[i]) continue;
+            else {
+                int value = pq.top();
+                pq.pop();
+                pq.push(arr[i]);
+                s += (arr[i] - value);
+            }
         }
     }
 
@@ -57,7 +50,7 @@ void solve_testcase() {
 
 int32_t main() {
     int t;
-    cin >> t;
+    t = 1;
     while (t--) {
         solve_testcase();
     }

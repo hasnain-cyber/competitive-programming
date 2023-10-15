@@ -101,7 +101,10 @@
         "__split_buffer": "cpp",
         "queue": "cpp",
         "stack": "cpp",
-        "stacktrace": "cpp"
+        "stacktrace": "cpp",
+        "expected": "cpp"
     },
-    "python.formatting.provider": "autopep8"
+    "python.formatting.provider": "autopep8",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.type": "ignore",
+    "C_Cpp.formatting": "vcFormat"
 }

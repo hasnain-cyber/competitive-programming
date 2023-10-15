@@ -3,7 +3,6 @@
 #define MOD 1000000007
 // #define MOD 998244353
 #define infinity numeric_limits<int>::max()
-#define infinity_double numeric_limits<double>::max()
 
 #define int long long int
 #define double long double
@@ -13,16 +12,10 @@
 using namespace std;
 
 template <typename T>
-void print_arr(vector<T> &arr) {
-    for (T element : arr) {
+void print_arr(vector<T>& arr) {
+    for (T element : arr)
         cout << element << ' ';
-    }
     cout << endl;
-}
-
-template <typename T>
-void sort_arr(vector<T> &arr) {
-    sort(arr.begin(), arr.end());
 }
 
 void solve_testcase() {
@@ -33,81 +26,123 @@ void solve_testcase() {
         cin >> arr[i];
     }
 
-    vector<pair<int, int>> segments;
-    pair<int, int> curr_segment = {-1, -1};
+    vector<int> curr;
+    int ans_left = -1, ans_right = -1, ans_product = 1;
+    int start = -1;
     for (int i = 0; i < n; i++) {
         if (arr[i] == 0) {
-            if (curr_segment.first != -1) {
-                segments.push_back(curr_segment);
-                curr_segment = {-1, -1};
-            }
-        } else {
-            if (curr_segment.first == -1) {
-                curr_segment.first = i;
-            }
-            curr_segment.second = i;
-        }
-    }
-    if (curr_segment.first != -1) {
-        segments.push_back(curr_segment);
-        curr_segment = {-1, -1};
-    }
+            if (curr.empty()) continue;
+            int temp = 1;
+            for (int j = 0; j < curr.size(); j++) temp *= curr[j];
 
-    pair<int, int> included_subarr = {-1, -1};
-    int max_value = 1;
-    for (auto segment : segments) {
-        int leftmost_negative = -1;
-        int rightmost_negative = -1;
-        int curr_value = 1;
-        for (int i = segment.first; i <= segment.second; i++) {
-            curr_value *= arr[i];
-            if (arr[i] < 0) {
-                if (leftmost_negative == -1) {
-                    leftmost_negative = i;
+            if (temp > 0) {
+                if (temp > ans_product) {
+                    ans_product = temp;
+                    ans_left = start;
+                    ans_right = i - 1;
                 }
-                rightmost_negative = i;
+            }
+            else {
+                int new_start = start;
+                int new_product1 = temp;
+                while (arr[new_start] > 0) {
+                    new_product1 /= arr[new_start];
+                    new_start++;
+                }
+                new_product1 /= arr[new_start];
+                new_start++;
+
+                int new_end = i - 1;
+                int new_product2 = temp;
+                while (arr[new_end] > 0) {
+                    new_product2 /= arr[new_end];
+                    new_end--;
+                }
+                new_product2 /= arr[new_end];
+                new_end--;
+
+                if (new_product1 > new_product2) {
+                    if (new_product1 > ans_product) {
+                        ans_product = new_product1;
+                        ans_left = new_start;
+                        ans_right = i - 1;
+                    }
+                }
+                else {
+                    if (new_product2 > ans_product) {
+                        ans_product = new_product2;
+                        ans_left = start;
+                        ans_right = new_end;
+                    }
+                }
+            }
+
+            curr.clear();
+        }
+        else {
+            if (curr.empty()) start = i;
+            curr.push_back(arr[i]);
+        }
+    }
+
+    if (!curr.empty()) {
+        int temp = 1;
+        for (int j = 0; j < curr.size(); j++) temp *= curr[j];
+
+        if (temp > 0) {
+            if (temp > ans_product) {
+                ans_product = temp;
+                ans_left = start;
+                ans_right = n - 1;
             }
         }
+        else {
+            int new_start = start;
+            int new_product1 = temp;
+            while (arr[new_start] > 0) {
+                new_product1 /= arr[new_start];
+                new_start++;
+            }
+            new_product1 /= arr[new_start];
+            new_start++;
 
-        if (curr_value < 0) {
-            int value1 = 1, value2 = 1;
-            for (int i = leftmost_negative + 1; i <= segment.second; i++) {
-                value1 *= arr[i];
+            int new_end = n - 1;
+            int new_product2 = temp;
+            while (arr[new_end] > 0) {
+                new_product2 /= arr[new_end];
+                new_end--;
             }
-            for (int i = segment.first; i <= rightmost_negative - 1; i++) {
-                value2 *= arr[i];
-            }
-            if (value1 >= value2) {
-                curr_value /= arr[leftmost_negative];
-                segment.first = leftmost_negative + 1;
-            } else {
-                curr_value /= arr[rightmost_negative];
-                segment.second = rightmost_negative - 1;
-            }
-        }
+            new_product2 /= arr[new_end];
+            new_end--;
 
-        if (segment.first <= segment.second) {
-            if (curr_value > max_value) {
-                max_value = curr_value;
-                included_subarr = segment;
+            if (new_product1 > new_product2) {
+                if (new_product1 > ans_product) {
+                    ans_product = new_product1;
+                    ans_left = new_start;
+                    ans_right = n - 1;
+                }
+            }
+            else {
+                if (new_product2 > ans_product) {
+                    ans_product = new_product2;
+                    ans_left = start;
+                    ans_right = new_end;
+                }
             }
         }
     }
 
-    if (included_subarr.first == -1) {
+    if (ans_left == -1) {
         cout << n << " " << 0 << endl;
-    } else {
-        cout << included_subarr.first << " " << n - included_subarr.second - 1 << endl;
+        return;
     }
+    cout << ans_left << ' ' << n - ans_right - 1 << endl;
 }
 
 int32_t main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
     int t;
     cin >> t;
-    for (int i = 1; i <= t; i++) {
+    while (t--) {
         solve_testcase();
     }
 }

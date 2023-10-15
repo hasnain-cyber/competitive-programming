@@ -18,38 +18,38 @@ void print_arr(vector<T>& arr) {
     cout << endl;
 }
 
+vector<int> lis(vector<int>& arr, int n) {
+    vector<int> ans;
+    ans.push_back(arr[0]);
+    for (int i = 1; i < n;i++) {
+        if (arr[i] > ans.back()) {
+            ans.push_back(arr[i]);
+        }
+        else {
+            int low = lower_bound(ans.begin(), ans.end(), arr[i]) - ans.begin();
+            ans[low] = arr[i];
+        }
+    }
+    return ans;
+}
+
 void solve_testcase() {
-    int n, m;
-    cin >> n >> m;
+    int n;
+    cin >> n;
     vector<int> arr(n);
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
-    m--;
 
-    priority_queue<int> pq1;
     int ans = 0;
-    int curr_sum = 0;
-    for (int i = m; i > 0; i--) {
-        pq1.push(arr[i]);
-        curr_sum += arr[i];
-        if (curr_sum > 0) {
-            curr_sum -= 2 * pq1.top();
+    int mn = n + 1, mn_win = n + 1;
+    for (int i = 0; i < n;i++) {
+        // can go left, but can't go to a winning position
+        if (arr[i] > mn && arr[i] < mn_win) {
             ans++;
-            pq1.pop();
+            mn_win = arr[i];
         }
-    }
-
-    priority_queue<int, vector<int>, greater<int>> pq2;
-    curr_sum = 0;
-    for (int i = m + 1; i < n; i++) {
-        pq2.push(arr[i]);
-        curr_sum += arr[i];
-        if (curr_sum < 0) {
-            curr_sum += 2 * (-pq2.top());
-            ans++;
-            pq2.pop();
-        }
+        mn = min(mn, arr[i]);
     }
 
     cout << ans << endl;

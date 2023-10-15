@@ -3,7 +3,6 @@
 #define MOD 1000000007
 // #define MOD 998244353
 #define infinity numeric_limits<int>::max()
-#define infinity_double numeric_limits<double>::max()
 
 #define int long long int
 #define double long double
@@ -13,51 +12,43 @@
 using namespace std;
 
 template <typename T>
-void print_arr(vector<T> &arr) {
-    for (T element : arr) {
+void print_arr(vector<T>& arr) {
+    for (T element : arr)
         cout << element << ' ';
-    }
     cout << endl;
 }
 
-template <typename T>
-void sort_arr(vector<T> &arr) {
-    sort(arr.begin(), arr.end());
-}
-
-vector<int> path;
-vector<int> curr;
-void dfs(int v, int k) {
-    while (curr[v] < k) {
-        int u = curr[v]++;
-        dfs(u, k);
-        path.push_back(u);
-    }
-}
-
 void solve_testcase() {
-    path.clear();
-    curr = vector<int>(26, 0);
-
     int n, k;
     cin >> n >> k;
 
-    dfs(0, k);
-    print_arr(path);
+    string ans = "a";
+    map<string, int> mp;
+    for (int i = 1; i < n; i++) {
+        char to_add = 'a';
+        for (char ch = 'b'; ch <= (char)('a' + k - 1); ch++) {
+            string curr = string(1, ans.back());
+            curr.push_back(to_add);
+            
+            string temp = string(1, ans.back());
+            temp.push_back(ch);
+            if (mp[temp] < mp[curr]) to_add = ch;
+        }
 
-    // cout << 'a';
-    // for (int i = 0; i < n - 1; i++) {
-    //     cout << (char)(path[i % path.size()] + 'a');
-    // }
+        ans.push_back(to_add);
+        mp[ans.substr(ans.size() - 2, 2)]++;
+    }
+
+    for (auto it : mp) {
+        cout << it.first << " " << it.second << endl;
+    }
+    cout << ans << endl;
 }
 
 int32_t main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
     int t;
     t = 1;
-    for (int i = 1; i <= t; i++) {
+    while (t--) {
         solve_testcase();
     }
 }

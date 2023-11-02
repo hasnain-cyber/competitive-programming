@@ -3,7 +3,6 @@
 #define MOD 1000000007
 // #define MOD 998244353
 #define infinity numeric_limits<int>::max()
-#define infinity_double numeric_limits<double>::max()
 
 #define int long long int
 #define double long double
@@ -14,15 +13,9 @@ using namespace std;
 
 template <typename T>
 void print_arr(vector<T>& arr) {
-    for (T element : arr) {
+    for (T element : arr)
         cout << element << ' ';
-    }
     cout << endl;
-}
-
-template <typename T>
-void sort_arr(vector<T>& arr) {
-    sort(arr.begin(), arr.end());
 }
 
 void solve_testcase() {
@@ -31,36 +24,49 @@ void solve_testcase() {
     string s, t;
     cin >> s >> t;
 
-    vector<int> freq(26, 0);
-    for (int i = 0; i < n;i++) {
-        if (i >= k || i + k < n) {
-            freq[s[i] - 'a']++;
-            freq[t[i] - 'a']--;
-        }
-        else {
+    map<char, int> m1, m2;
+    for (auto ch : s) m1[ch]++;
+    for (auto ch : t) m2[ch]++;
+
+    if (m1 != m2) {
+        cout << "NO" << endl;
+        return;
+    }
+
+    if (n <= 3) {
+        for (int i = 0; i < n; i++) {
             if (s[i] != t[i]) {
                 cout << "NO" << endl;
                 return;
             }
         }
+        cout << "YES" << endl;
     }
-
-    for (int i = 0; i < 26;i++) {
-        if (freq[i] != 0) {
+    else if (n == 4) {
+        if (s[1] == t[1] && s[2] == t[2]) {
+            cout << "YES" << endl;
+        }
+        else {
             cout << "NO" << endl;
-            return;
         }
     }
-    cout << "YES" << endl;
+    else if (n == 5) {
+        if (s[2] == t[2]) {
+            cout << "YES" << endl;
+        }
+        else {
+            cout << "NO" << endl;
+        }
+    }
+    else {
+        cout << "YES" << endl;
+    }
 }
 
 int32_t main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
     int t;
     cin >> t;
-    for (int i = 1; i <= t; i++) {
+    while (t--) {
         solve_testcase();
     }
 }

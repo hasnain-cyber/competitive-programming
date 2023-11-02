@@ -1,15 +1,41 @@
-// write a java program to create an array, and convert it to list
-// and then add an element to the list and print the list
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 class test {
     public static void main(String[] args) {
-        String[] arr = {"a", "b", "c"};
-        List<String> list = new ArrayList<>(Arrays.asList(arr));
-        list.add("d");
-        System.out.println(list);
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        int categories[] = new int[n];
+        for (int i = 0; i < n; i++)
+            categories[i] = sc.nextInt();
+
+        int prices[] = new int[n];
+        for (int i = 0; i < n; i++)
+        prices[i] = sc.nextInt();
+
+        HashMap<Integer, Integer> mp = new HashMap<Integer, Integer>();
+        for (int i = 0; i < n; i++) {
+            if (mp.containsKey(categories[i])) {
+                mp.put(categories[i], mp.get(categories[i]) + prices[i]);
+            } else {
+                mp.put(categories[i], prices[i]);
+            }
+        }
+
+        ArrayList<Integer> values = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> entry : mp.entrySet()) {
+            values.add(entry.getValue());
+        }
+        Collections.sort(values);
+
+        int ans = 0;
+        for (int i = 0; i < values.size(); i++) {
+            ans += values.get(i) * (i + 1);
+        }
+        
+        System.out.println(ans);
+
+        sc.close();
     }
 }

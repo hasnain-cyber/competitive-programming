@@ -1,5 +1,3 @@
-< " ";
-                // cout << endl;
-                // for (auto i : mx_indices) cout << i << " ";
-                // cout << endl;
-                // cout << i << " : " << idx << endl;
+ };
+    // vector<int> network_to = { 2, 3, 4 };
+    // vector<int> freq = { 1, 1, 1, 1 };

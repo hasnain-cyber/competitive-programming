@@ -27,21 +27,33 @@ int main() {
     int n = 5;
     // generate array of length n
     while (true) {
+        // generate m edges
         std::vector<int> arr(n);
         for (int i = 0; i < n; i++) {
-            arr[i] = rand() % 3;
+            arr[i] = rand() % 10;
         }
+
         std::ofstream inputFile("input.txt"); // Create an input file for the programs
-        inputFile << n << std::endl;
-        for (int i = 0; i < n; ++i) {
+        inputFile << 1 << " " << n << std::endl;
+        for(int i = 0; i < n; i++) {
             inputFile << arr[i] << " ";
         }
+        inputFile << std::endl;
         inputFile.close();
 
         std::string output1 = runProgram(program1, "input.txt");
         std::string output2 = runProgram(program2, "input.txt");
 
         if (output1 != output2) {
+            // take 2nd and 3rd arguments from both outputs
+            int temp, l1, r1, l2, r2;
+            std::stringstream ss1(output1);
+            ss1 >> temp >> l1 >> r1;
+            std::stringstream ss2(output2);
+            ss2 >> temp >> l2 >> r2;
+
+            if (r2 - l2 == r1 - l1) continue;
+
             std::cout << "Difference found for input: " << n << std::endl;
             std::cout << "Array: ";
             for (int i = 0; i < n; ++i) {

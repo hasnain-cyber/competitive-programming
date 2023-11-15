@@ -21,21 +21,21 @@ void print_arr(vector<T>& arr) {
 vector<int> find_max(vector<int>& arr) {
     int n = arr.size();
 
-    int curr_l = arr[0], curr_sum = 1;
-    int max_sum = 1, max_l = arr[0], max_r_idx = -1;
+    int curr_l = 0, curr_sum = 1;
+    int max_sum = 1, max_l = 0, max_r = -1;
     for (int i = 0; i < n - 1; i++) {
         curr_sum += arr[i] - arr[i + 1] + 2;
-        if (curr_sum <= 1) {
-            curr_l = arr[i];
+        if (curr_sum < 1) {
+            curr_l = i + 1;
             curr_sum = 1;
         }
         if (curr_sum > max_sum) {
-            max_l = curr_l, max_r_idx = i;
+            max_l = curr_l, max_r = i;
             max_sum = curr_sum;
         }
     }
 
-    return { max_sum, max_l, arr[max_r_idx + 1] };
+    return { max_sum, arr[max_l], arr[max_r + 1] };
 }
 
 void solve_testcase() {

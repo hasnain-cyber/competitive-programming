@@ -21,23 +21,21 @@ void print_arr(vector<T>& arr) {
 void solve_testcase() {
     int n;
     cin >> n;
-    map<char, int> mp;
-    for (int i = 0; i < 2 * n; i++) {
-        string s;
-        cin >> s;
-
-        for (char ch : s) mp[ch]++;
-    }
     string s;
     cin >> s;
-    for (char ch : s) mp[ch]++;
 
-    for (auto it : mp) {
-        if (it.second & 1) {
-            cout << it.first << endl;
-            return;
+    vector<int> occur(26, -1);
+    for (int i = 0; i < n; i++) {
+        int idx = s[i] - 'a';
+        if (occur[idx] == -1) {
+            occur[idx] = i;
         }
     }
+
+    int ans = 0;
+    for (int i = 0; i < 26; i++) ans += occur[i] != -1 ? (n - occur[i]): 0;
+
+    cout << ans << endl;
 }
 
 int32_t main() {

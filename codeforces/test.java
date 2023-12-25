@@ -1,41 +1,30 @@
-import java.util.*;
+public class test {
+    static int a = 10;
+    int i = 1;
 
-class test {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    static public void main(float[] ar) {
+        System.out.println("1st");
+        int b[] = { 12 };
+        main(b);
+    }
 
-        int n = sc.nextInt();
+    public static void main(int arr[]) {
+        System.out.println("2nd");
+        System.exit(0);
+    }
 
-        int categories[] = new int[n];
-        for (int i = 0; i < n; i++)
-            categories[i] = sc.nextInt();
+    static {
+        System.out.println("abc");
+    }
 
-        int prices[] = new int[n];
-        for (int i = 0; i < n; i++)
-        prices[i] = sc.nextInt();
+    {
+        System.out.println("def");
+    }
 
-        HashMap<Integer, Integer> mp = new HashMap<Integer, Integer>();
-        for (int i = 0; i < n; i++) {
-            if (mp.containsKey(categories[i])) {
-                mp.put(categories[i], mp.get(categories[i]) + prices[i]);
-            } else {
-                mp.put(categories[i], prices[i]);
-            }
-        }
-
-        ArrayList<Integer> values = new ArrayList<>();
-        for (Map.Entry<Integer, Integer> entry : mp.entrySet()) {
-            values.add(entry.getValue());
-        }
-        Collections.sort(values);
-
-        int ans = 0;
-        for (int i = 0; i < values.size(); i++) {
-            ans += values.get(i) * (i + 1);
-        }
-        
-        System.out.println(ans);
-
-        sc.close();
+    public static void main(String ar[]) {
+        System.out.println("X");
+        float a[] = { 1.2F };
+        System.exit(0);
+        test.main(a);
     }
 }

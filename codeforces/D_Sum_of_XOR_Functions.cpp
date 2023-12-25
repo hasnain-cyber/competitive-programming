@@ -22,21 +22,37 @@ void solve_testcase() {
     int n;
     cin >> n;
     vector<int> arr(n);
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
+    for (int i = 0; i < n; i++) cin >> arr[i];
 
     int ans = 0;
-    for (int b = 0; b <= 32; b++) {
-        for (int l = 1; i < n; i++) {
-            
+    for (int i = 0; i < 32; i++) {
+        int curr = 0;
+
+        vector<int> pre(n);
+        for (int j = 0; j < n; j++) pre[j] = ((arr[j] >> i) & 1);
+        for (int j = 1; j < n; j++) pre[j] ^= pre[j - 1];
+
+        int count_0 = 1, count_1 = 0;
+        int sum_0 = 0, sum_1 = 0;
+        for (int j = 0; j < n; j++) {
+            sum_1 += count_1;
+            sum_0 += count_0;
+
+            if (pre[j]) count_1++, curr = (curr + sum_0) % MOD;
+            else count_0++, curr = (curr + sum_1) % MOD;
         }
+
+        for (int j = 0; j < i; j++) curr = (curr << 1) % MOD;
+
+        ans = (ans + curr) % MOD;
     }
+
+    cout << ans << endl;
 }
 
 int32_t main() {
     int t;
-    cin >> t;
+    t = 1;
     while (t--) {
         solve_testcase();
     }

@@ -103,7 +103,9 @@
         "stack": "cpp",
         "stacktrace": "cpp",
         "expected": "cpp",
-        "spanstream": "cpp"
+        "spanstream": "cpp",
+        "format": "cpp",
+        "stdfloat": "cpp"
     },
     "python.formatting.provider": "autopep8",
     "C_Cpp.vcFormat.newLine.beforeOpenBrace.type": "ignore",

@@ -24,47 +24,34 @@ int main() {
     const std::string program1 = "./program1"; // Replace with the actual path to your program
     const std::string program2 = "./program2"; // Replace with the actual path to your program
 
-    int n = 5;
-    // generate array of length n
+    int k = 10;
     while (true) {
-        // generate m edges
-        std::vector<int> arr(n);
-        for (int i = 0; i < n; i++) {
-            arr[i] = rand() % 10;
-        }
-
         std::ofstream inputFile("input.txt"); // Create an input file for the programs
-        inputFile << 1 << " " << n << std::endl;
-        for(int i = 0; i < n; i++) {
-            inputFile << arr[i] << " ";
-        }
-        inputFile << std::endl;
+        int n = rand() % k + 1;
+        string s;
+        for (int i = 0; i < n; i++) s.push_back(rand() % 26 + 'a');
+        inputFile << n << " " << k << std::endl;
+        inputFile << s << std::endl;
         inputFile.close();
 
         std::string output1 = runProgram(program1, "input.txt");
         std::string output2 = runProgram(program2, "input.txt");
 
+        // trim the outputs
+        output1.erase(std::remove(output1.begin(), output1.end(), '\n'), output1.end());
+        output2.erase(std::remove(output2.begin(), output2.end(), '\n'), output2.end());
+
         if (output1 != output2) {
-            // take 2nd and 3rd arguments from both outputs
-            int temp, l1, r1, l2, r2;
-            std::stringstream ss1(output1);
-            ss1 >> temp >> l1 >> r1;
-            std::stringstream ss2(output2);
-            ss2 >> temp >> l2 >> r2;
-
-            if (r2 - l2 == r1 - l1) continue;
-
-            std::cout << "Difference found for input: " << n << std::endl;
-            std::cout << "Array: ";
-            for (int i = 0; i < n; ++i) {
-                std::cout << arr[i] << " ";
-            }
+            std::cout << "Difference found for input: " << n << " " << k << std::endl;
+            std::cout << "Input: " << s << std::endl;
             std::cout << std::endl;
             std::cout << "Output of program1: " << output1 << std::endl;
             std::cout << "Output of program2: " << output2 << std::endl;
-
-            return 0;
         }
+        // else {
+        //     std::cout << "Output of program1: " << output1 << std::endl;
+        //     std::cout << "Output of program2: " << output2 << std::endl;
+        // }
     }
 
     return 0;

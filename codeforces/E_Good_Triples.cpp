@@ -18,26 +18,27 @@ void print_arr(vector<T>& arr) {
     cout << endl;
 }
 
+int sod(int n) {
+    int ans = 0;
+    while (n > 0) {
+        ans += (n % 10);
+        n /= 10;
+    }
+    return ans;
+}
+
 void solve_testcase() {
     int n;
     cin >> n;
-    map<char, int> mp;
-    for (int i = 0; i < 2 * n; i++) {
-        string s;
-        cin >> s;
 
-        for (char ch : s) mp[ch]++;
+    int ans = 1;
+    while (n > 0) {
+        int digit = n % 10;
+        ans *= ((digit + 1) * (digit + 2)) / 2;
+        n /= 10;
     }
-    string s;
-    cin >> s;
-    for (char ch : s) mp[ch]++;
 
-    for (auto it : mp) {
-        if (it.second & 1) {
-            cout << it.first << endl;
-            return;
-        }
-    }
+    cout << ans << endl;
 }
 
 int32_t main() {

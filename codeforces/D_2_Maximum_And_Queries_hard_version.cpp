@@ -24,32 +24,30 @@ void solve_testcase() {
     vector<int> arr(n);
     for (int i = 0; i < n; i++) cin >> arr[i];
 
+    vector<int> costs(61);
+    vector<int> temp_arr = arr;
+    for (int bit = 60; bit >= 0; bit--) {
+        int cost = 0;
+        int temp = (1LL << bit);
+        for (int i = 0; i < n; i++) {
+            if (temp_arr[i] & temp) continue;
+
+            int transformed = ((2 * temp - 1) & temp_arr[i]);
+            cost += temp - transformed;
+        }
+
+        costs[bit] = cost;
+    }
+
     for (int i = 0; i < q; i++) {
         int k;
         cin >> k;
 
         int ans = 0;
-        vector<int> temp_arr = arr;
         for (int bit = 60; bit >= 0; bit--) {
-            int cost = 0;
-            int temp = (1LL << bit);
-            for (int i = 0; i < n; i++) {
-                if (temp_arr[i] & temp) continue;
-
-                int transformed = ((2 * temp - 1) & temp_arr[i]);
-                cost += temp - transformed;
-                if (cost > k) break;
-            }
-
-            if (cost <= k) {
-                k -= cost;
-                ans += temp;
-
-                for (int i = 0; i < n; i++) {
-                    if (temp_arr[i] & temp) continue;
-                    
-                    temp_arr[i] = temp;
-                }
+            if (costs[bit] <= k) {
+                ans += (1LL << bit);
+                k -= costs[bit];
             }
         }
 
